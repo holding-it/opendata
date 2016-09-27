@@ -122,7 +122,7 @@ service apache2 restart
 mkdir $APPLICATION_DIRECTORY/github
 cd $APPLICATION_DIRECTORY/github
 # DOWNLOAD THE APPLICITAION NECCESSERY FILES FROM GITHUB TO THE GITHUB SUBFOLDER(temporary folder)
-wget https://github.com/holding-it/opendata/archive/master.zip
+wget https://github.com/holding-it/$APPLICATION_NAME/archive/master.zip
 cd $APPLICATION_DIRECTORY
 # DOWNLOAD THE LATEST DRUPAL 7 CORE FILES IN THE DRUPAL SUBFOLDER(temporary folder) WITH DRUSH(Drush is a command-line shell and scripting interface for Drupal)
 drush dl drupal-7 --drupal-project-rename=drupal
@@ -146,17 +146,29 @@ drush sql-drop --database=default --yes
 # UNZIP AND COPY THE FINAL PLACE THE APPLICATION FILES AND FOLDERS THAN REMOVE THE UNNECESSARY THINGS
 cd $APPLICATION_DIRECTORY/github
 unzip $APPLICATION_DIRECTORY/github/master.zip
-mysql -u$DATABASE_ADMIN_USER -h$DATABASE_HOST -P$MYSQL_PORT -p$DATABASE_ADMIN_PASSWORD $DATABASE_NAME < $APPLICATION_DIRECTORY/github/opendata-master/db/opendata.sql
-cp -avr $APPLICATION_DIRECTORY/github/timi-master/all $APPLICATION_DIRECTORY/public_html/sites
+mysql -u$DATABASE_ADMIN_USER -h$DATABASE_HOST -P$MYSQL_PORT -p$DATABASE_ADMIN_PASSWORD $DATABASE_NAME < $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/db/$APPLICATION_NAME.sql
+cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/all $APPLICATION_DIRECTORY/public_html/sites
 unzip $APPLICATION_DIRECTORY/public_html/sites/all/libraries.zip -d $APPLICATION_DIRECTORY/public_html/sites/all
 rm $APPLICATION_DIRECTORY/public_html/sites/all/libraries.zip
 unzip $APPLICATION_DIRECTORY/public_html/sites/all/modules.zip -d $APPLICATION_DIRECTORY/public_html/sites/all
 rm $APPLICATION_DIRECTORY/public_html/sites/all/modules.zip
 unzip $APPLICATION_DIRECTORY/public_html/sites/all/themes.zip -d $APPLICATION_DIRECTORY/public_html/sites/all
 rm $APPLICATION_DIRECTORY/public_html/sites/all/themes.zip
-cp -avr $APPLICATION_DIRECTORY/github/timi-master/files $APPLICATION_DIRECTORY/public_html/sites/default
+cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/files $APPLICATION_DIRECTORY/public_html/sites/default
 unzip $APPLICATION_DIRECTORY/public_html/sites/default/files/files.zip -d $APPLICATION_DIRECTORY/public_html/sites/default
 rm $APPLICATION_DIRECTORY/public_html/sites/default/files/files.zip
+#COPY THE DEMO DATA
+cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/programok_xml.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
+cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/shops_pdf.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
+cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/shops_sql.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
+cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/shops_json.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
+cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/shops_xml.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
+zip -FF miskolc_statues.zip --out statues_sql.zip
+cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/statues_sql.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
+cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/statues_xml.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
+cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/statues_json.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
+cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/statues_pdf.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
+#
 rm -rf $APPLICATION_DIRECTORY/github
 rm -rf $APPLICATION_DIRECTORY/drupal
 # SET THE NECESSARY FOLDER AND FILE PERMISSIONS
