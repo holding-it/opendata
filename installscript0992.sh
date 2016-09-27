@@ -15,7 +15,7 @@ export DATABASE_ADMIN_USER="miskolc"
 # REMOTE SERVER MYSQL PASSWORD
 export DATABASE_ADMIN_PASSWORD="F4UXoIm1yGUHxTIv"
 # DATABASE NAME FOR THE APPLICATION
-export DATABASE_NAME="miskolc_opendata"
+export DATABASE_NAME="miskolc_...opendata"
 
 # SERVER ADMIN E-MAIL ADDRESS FOR VIRTUALHOST
 export SERVER_ADMIN_MAIL="admin@test.com"
@@ -42,6 +42,7 @@ apt-get install php5-gd -y
 apt-get install php5-curl -y
 apt-get install libssh2-php -y
 apt-get install unzip -y
+apt-get install zip -y
 apt-get install drush -y
 #----------------------------------------------------
 # DROP ALL TABLES FROM DATABASE
@@ -122,6 +123,7 @@ service apache2 restart
 mkdir $APPLICATION_DIRECTORY/github
 cd $APPLICATION_DIRECTORY/github
 # DOWNLOAD THE APPLICITAION NECCESSERY FILES FROM GITHUB TO THE GITHUB SUBFOLDER(temporary folder)
+# Warning! There must be change https://github.com/STORM-CLOUDS/Events-OPEN-DATA-Source
 wget https://github.com/holding-it/$APPLICATION_NAME/archive/master.zip
 cd $APPLICATION_DIRECTORY
 # DOWNLOAD THE LATEST DRUPAL 7 CORE FILES IN THE DRUPAL SUBFOLDER(temporary folder) WITH DRUSH(Drush is a command-line shell and scripting interface for Drupal)
@@ -163,8 +165,8 @@ cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/shops_pd
 cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/shops_sql.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
 cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/shops_json.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
 cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/shops_xml.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
-zip -FF miskolc_statues.zip --out statues_sql.zip
-cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/statues_sql.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
+zip -FF $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/statues_sql.zip --out $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/statues_sql2.zip
+cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/statues_sql2.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
 cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/statues_xml.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
 cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/statues_json.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
 cp -avr $APPLICATION_DIRECTORY/github/$APPLICATION_NAME-master/contents/statues_pdf.zip $APPLICATION_DIRECTORY/public_html/sites/default/files/opendata
